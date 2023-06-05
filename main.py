@@ -1,5 +1,5 @@
 import fastapi
-from fastapi import FastAPI
+from fastapi import FastAPI, Response, status
 from fastapi.params import Body
 from fastapi.params import Optional
 from pydantic import BaseModel
@@ -42,8 +42,10 @@ def create_posts(new_post: Post):
 
 
 @app.get("/posts/{id}")
-def get_post(id: int):
+def get_post(id: int, response: Response):
     post = find_post(id)
+    if not post:
+        response.status_code = status.HTTP_400_BAD_REQUEST
     print(post)
     return {"post_detail": post}
 
