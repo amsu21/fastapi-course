@@ -15,6 +15,12 @@ def find_post(id):
     for posts in my_posts:
         if posts['id'] == id:
             return posts
+        
+def find_index_post(id):
+    for index, posts in enumerate(my_posts):
+        if posts['id'] == id:
+            return index
+        
 
 
 class Post(BaseModel):
@@ -27,12 +33,14 @@ class Post(BaseModel):
 async def root():
     return {"message": "Hello World"}
 
+# GET POSTS
 @app.get("/posts")
 def get_posts():
     print()
     print(my_posts)
     return {"data": my_posts}
 
+# CREATE POSTS
 @app.post("/posts", status_code=status.HTTP_201_CREATED)
 def create_posts(new_post: Post):
     post_dict = new_post.dict()
@@ -41,6 +49,7 @@ def create_posts(new_post: Post):
     return {"data": post_dict}
 
 
+# GET SPECIFIC POST
 @app.get("/posts/{id}")
 def get_post(id: int, response: Response):
     post = find_post(id)
@@ -52,5 +61,11 @@ def get_post(id: int, response: Response):
     return {"post_detail": post}
 
 
-
-# TITLE STR, CONTENT STR, 
+# DELETE A POST
+@app.delete("/posts/{id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_post(id: int):
+    # FIND THE INDEX IN THE ARRAY THAT HAS REQUIRED ID
+    index = find_index_post(id)
+    
+    my_posts.pop(index)
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
