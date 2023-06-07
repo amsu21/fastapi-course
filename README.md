@@ -1,4 +1,4 @@
-# fastapi-course
+# FASTAPI PYTHON COURSE
 FASTAPI Python Course
 
 Link below is the REST API Documentation
