@@ -36,6 +36,7 @@ async def root():
 def get_posts():
     print()
     print(my_posts)
+    print()
     return {"data": my_posts}
 
 # CREATE POSTS
@@ -74,7 +75,16 @@ def delete_post(id: int):
 # UPDATE POST
 @app.put("/posts/{id}")
 def update_post(id: int, post: Post):
+    # FIND THE INDEX IN THE ARRAY THAT HAS REQUIRED ID
+    index = find_index_post(id)
+    
+    if index == None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"post with id: {id} does not exist")
+    
+    post_dict = post.dict()
+    post_dict['id'] = id
+    my_posts[index] = post_dict
     print()
     print(post)
     print()
-    return {'message': "updated post"}
+    return {'data': post_dict}
