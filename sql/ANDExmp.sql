@@ -1,0 +1,5 @@
+/* ANY ITEM IN INVENTORY GREATER THAN 0
+& ALSO COSTS MORE THAN $10
+*/
+
+SELECT * FROM products WHERE inventory >= 1 AND price >= 10;
