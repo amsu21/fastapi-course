@@ -1,0 +1,1 @@
+INSERT INTO products (name, price, inventory) VALUES ('tortilla', 4, 1000);
