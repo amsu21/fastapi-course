@@ -1,0 +1,1 @@
+SELECT id AS products_id, is_sale AS on_sale FROM products;
