@@ -1,0 +1,1 @@
+INSERT INTO products (name, price, inventory) VALUES ('SUV', 4000, 5), ('Laptop', 200, '5'), ('Monitor', 150, 8) returning *;
