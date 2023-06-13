@@ -1,5 +1,7 @@
 import fastapi
 from fastapi import FastAPI, HTTPException, Response, status
+import psycopg2
+from psycopg2.extras import RealDictCursor
 from fastapi.params import Body
 from fastapi.params import Optional
 from pydantic import BaseModel
@@ -9,6 +11,11 @@ app = FastAPI()
 
 # STORES ALL THE POSTS
 my_posts = [{"titile": "title of post 1", "content": "content of post 1", "id": 1}, {"title": "favorite shoes", "content": "New Balances", "id": 2}]
+
+# # DATABASE CONNECTION
+# try:
+#     connect = psycopg2.connect(host = 'localhost', database = 'fastapi', user='postgres', password='password123', )
+
 
 def find_post(id):
     for posts in my_posts:
@@ -25,7 +32,8 @@ class Post(BaseModel):
     title: str
     content: str
     publishhed: bool = True
-    rating: Optional[int] = None
+    id: int
+    created_at: str
 
 @app.get("/")
 async def root():
