@@ -6,23 +6,28 @@ from fastapi.params import Body
 from fastapi.params import Optional
 from pydantic import BaseModel
 from random import randrange
+import time
 
 app = FastAPI()
 
 # STORES ALL THE POSTS
 my_posts = [{"titile": "title of post 1", "content": "content of post 1", "id": 1}, {"title": "favorite shoes", "content": "New Balances", "id": 2}]
 
-# DATABASE CONNECTION
-try:
-    connect = psycopg2.connect(host = 'localhost', database = 'fastapi', user='postgres', password='rootroot', cursor_factory=RealDictCursor)
-    cursor = connect.cursor()
-    print()
-    print("DATABASE CONNECTED!!!")
-    print()
-except Exception as error:
-    print("IT AINT WORK DAWG")
-    print()
-    print("Error was: ", error)
+while True:
+    
+    # DATABASE CONNECTION
+    try:
+        connect = psycopg2.connect(host = 'localhost', database = 'fastapi', user='postgres', password='rootroot', cursor_factory=RealDictCursor)
+        cursor = connect.cursor()
+        print()
+        print("DATABASE CONNECTED!!!")
+        print()
+        break
+    except Exception as error:
+        print("IT AINT WORK DAWG")
+        print()
+        print("Error was: ", error)
+        time.sleep(2)
 
 
 def find_post(id):
