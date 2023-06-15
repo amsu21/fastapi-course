@@ -55,10 +55,12 @@ async def root():
 # GET POSTS
 @app.get("/posts")
 def get_posts():
+    cursor.execute(""" SELECT * FROM posts """)
+    posts = cursor.fetchall()
     print()
-    print(my_posts)
+    print("GOT YOUR POSTS!!!!!!!")
     print()
-    return {"data": my_posts}
+    return {"data": posts}
 
 # CREATE POSTS
 @app.post("/posts", status_code=status.HTTP_201_CREATED)
