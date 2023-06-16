@@ -44,7 +44,7 @@ def find_index_post(id):
 class Post(BaseModel):
     title: str
     content: str
-    publishhed: bool = True
+    published: bool = True
     id: int
     created_at: str
 
@@ -65,10 +65,11 @@ def get_posts():
 # CREATE POSTS
 @app.post("/posts", status_code=status.HTTP_201_CREATED)
 def create_posts(new_post: Post):
-    post_dict = new_post.dict()
-    post_dict['id'] = randrange(0, 100000000)
-    my_posts.append(post_dict)
-    return {"data": post_dict}
+    # INSERTING POSTS INTO THE DATABASE
+    cursor.execute("""INSERT INTO posts (title, content, published) VALUES (%s, %s, %s) RETURNING * """,
+                   (new_post.title, new_post.content, new_post.published))
+    created_post = cursor.fetchone()
+    return {"data": created_post}
 
 
 # GET SPECIFIC POST
